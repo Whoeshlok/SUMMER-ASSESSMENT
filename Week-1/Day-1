@@ -1,0 +1,65 @@
+Ques 2144 : daily challenge on LeetCode: 
+solution :
+class Solution {
+public:
+    int minimumCost(vector<int>& cost) {
+        sort(cost.begin(),cost.end());
+        int n = cost.size();
+        if(n== 1) return cost[0];
+        int sum = 0;
+        for(int i = n-1 ; i>= 0 ;  i -= 3){
+            sum += cost[i];
+            if (i - 1 >= 0) {
+                sum += cost[i - 1];
+            }
+        }
+        return sum;
+    }
+};
+
+
+Ques 1 : Two Sum 
+solution : 
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> mp;
+        for (int i = 0; i < nums.size(); i++) {
+            int x = target - nums[i];
+
+            if (mp.count(need)) {
+                return {mp[x], i};
+            }
+
+            mp[nums[i]] = i;
+        }
+
+        return {};
+    }
+};
+
+
+ques 890 : 
+solution:
+class Solution {
+public:
+    bool check(string a , string b){
+        unordered_map<char,char>mp1;
+        unordered_map<char,char>mp2;
+
+        for(int i = 0 ; i<a.size();i++){
+            if(mp1.count(a[i]) && mp1[a[i]] != b[i]) return false;
+            if(mp2.count(b[i]) && mp2[b[i]] != a[i]) return false;
+            mp1[a[i]] = b[i];
+            mp2[b[i]] = a[i];
+        }
+        return true;
+    }
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        vector<string>ans;
+        for(auto s : words){
+            if(check(s,pattern)) ans.push_back(s);
+        }
+        return ans;
+    }
+};
