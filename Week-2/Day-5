@@ -1,1 +1,25 @@
-
+1695. Maximum Erasure Value
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        unordered_map<int,int>mp;
+        int low = 0 , high = 0;
+        int ans = INT_MIN;
+        int sum = 0;
+        while(high<nums.size()){
+            mp[nums[high]]++;
+            sum += nums[high];
+            int k = high-low+1;
+            while(mp.size()<k){
+                sum -= nums[low];
+                mp[nums[low]]--;
+                if(mp[nums[low]]==0) mp.erase(nums[low]);
+                low++;
+                k = high-low+1;
+            }
+            ans = max(ans,sum);
+            high++;
+        }
+        return ans;
+    }
+};
