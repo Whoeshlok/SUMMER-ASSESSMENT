@@ -23,3 +23,29 @@ public:
         return ans;
     }
 };
+
+
+
+2799. Count Complete Subarrays in an Array
+class Solution {
+public:
+    int countCompleteSubarrays(vector<int>& nums) {
+        unordered_set<int>st(nums.begin(),nums.end());
+        int k = st.size();
+        unordered_map<int,int>mp;
+        int low = 0 , high = 0;
+        int count = 0;
+        while(high<nums.size()){
+            mp[nums[high]]++;
+            while(mp.size() == k){
+                mp[nums[low]]--;
+                count += nums.size()-high;
+                if(mp[nums[low]] == 0) mp.erase(nums[low]);
+                low++;
+            }
+            high++;
+        }
+        return count;
+
+    }
+};
