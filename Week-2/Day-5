@@ -49,3 +49,24 @@ public:
 
     }
 };
+
+
+1004. Max Consecutive Ones III
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int low = 0 , high = 0;
+        int ans = INT_MIN;
+        int z = 0;
+        while(high<nums.size()){
+            if(nums[high]==0) z++;
+            while(z>k){
+                if(nums[low]==0) z--;
+                low++;
+            }
+            ans = max(ans,high-low+1);
+            high++;
+        }
+        return ans;
+    }
+};
