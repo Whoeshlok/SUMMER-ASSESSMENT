@@ -42,3 +42,29 @@ public:
         return ans;
     }
 };
+
+
+
+2260. Minimum Consecutive Cards to Pick Up
+class Solution {
+public:
+    int minimumCardPickup(vector<int>& cards) {
+        unordered_map<int,int>mp;
+        int low = 0 , high = 0;
+        int ans = INT_MAX;
+        while(high<cards.size()){
+            mp[cards[high]]++;
+            int k = high -low +1;
+            while(mp.size()<k){
+                ans = min(ans,high-low+1);
+                mp[cards[low]]--;
+                if(mp[cards[low]] == 0) mp.erase(cards[low]);
+                low++;
+                k = high-low+1;
+            }
+            high++;
+        }
+        if(ans == INT_MAX) return -1;
+        return ans;
+    }
+};
