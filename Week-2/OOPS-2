@@ -1,1 +1,77 @@
+Creation of student class :
+#include <iostream>
+using namespace std;
 
+class Student {
+private:
+    string name;
+    int rollNo;
+
+public:
+    void setData(string n, int r) {
+        name = n;
+        rollNo = r;
+    }
+
+    void display() {
+        cout << "Name: " << name << endl;
+        cout << "Roll No: " << rollNo << endl;
+    }
+};
+
+int main() {
+    Student s;
+    s.setData("Eshlok", 101);
+    s.display();
+
+    return 0;
+}
+
+
+constructor & deconstructor :
+#include <iostream>
+using namespace std;
+
+class Car {
+private:
+    string brand;
+
+public:
+    Car(string b) {
+        brand = b;
+        cout << "Constructor called for " << brand << endl;
+    }
+
+    ~Car() {
+        cout << "Destructor called for " << brand << endl;
+    }
+};
+
+int main() {
+    Car c("BMW");
+    return 0;
+}
+
+
+abstract class :
+#include <iostream>
+using namespace std;
+
+class Vehicle {
+public:
+    virtual void start() = 0;
+};
+
+class Bike : public Vehicle {
+public:
+    void start() override {
+        cout << "Bike Started" << endl;
+    }
+};
+
+int main() {
+    Bike b;
+    b.start();
+
+    return 0;
+}
