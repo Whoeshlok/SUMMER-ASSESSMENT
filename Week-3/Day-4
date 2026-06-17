@@ -1,1 +1,33 @@
-
+Directed Graph Cycle
+class Solution {
+  public:
+    bool cycle = false;
+    void dfs(vector<vector<int>>& a , int node , vector<bool>& path , vector<bool>& vis){
+        vis[node] = true;
+        path[node] = true;
+        for(int i = 0 ; i<a[node].size(); i++){
+            int neigh = a[node][i];
+            if(vis[neigh] == true && path[neigh] == true) cycle = true;
+            if(vis[neigh] == false){
+                dfs(a,neigh,path,vis);
+            }
+        }
+        path[node] = false;
+        return ;
+    }
+    bool isCyclic(int V, vector<vector<int>> &edges) {
+        vector<vector<int>>adj(V);
+        for(int i = 0 ; i<edges.size(); i++){
+            vector<int>edge = edges[i];
+            int src = edge[0];
+            int dest = edge[1];
+            
+            adj[src].push_back(dest);
+        }
+        int n = edges.size();
+        vector<bool> path(V,false) , vis(V,false);
+        for(int i = 0 ; i< V ; i++)
+        if(!vis[i]){dfs(adj,i,path,vis);}
+        return cycle;
+    }
+};
