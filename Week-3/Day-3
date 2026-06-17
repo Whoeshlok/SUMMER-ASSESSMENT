@@ -43,3 +43,47 @@ public:
         return fresh>0 ? -1 : min;
     }
 };
+
+
+
+
+695. Max Area of Island
+class Solution {
+public:
+    bool valid(int i , int j , int n , int m ){
+        if(i<0 || i>= n || j<0 || j>=m) return false;
+        return true;
+    }
+    void dfs(vector<vector<int>>&a , int i , int j , int n , int m ,int &x , vector<vector<bool>>&vis){
+        vis[i][j] = true;
+        x++;
+        vector<int> dx = {-1,1,0,0};
+        vector<int> dy = {0,0,-1,1};
+        for(int k = 0 ; k<4; k++){
+            int row = i + dx[k];
+            int col = j + dy[k];
+
+            if(valid(row,col,n,m) && vis[row][col] == false && a[row][col] == 1){
+                dfs(a,row,col,n,m,x,vis);
+            }
+        }
+    }
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+
+        vector<vector<bool>>vis(n,vector<bool>(m,false));
+        int ans = 0;
+        for(int i = 0 ; i< n ; i++){
+            for(int j = 0 ; j<m ; j++){
+                if(grid[i][j] == 1 && vis[i][j] == false){
+                    int x = 0;
+                    dfs(grid,i,j,n,m,x,vis);
+                    ans = max(ans,x);
+                }
+            }
+        }
+        return ans;
+
+    }
+};
