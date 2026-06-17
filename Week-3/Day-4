@@ -53,3 +53,42 @@ public:
         return res;
     }
 };
+
+
+419. Battleships in a Board
+class Solution {
+public:
+    vector<int> x = {-1,1,0,0};
+    vector<int> y = {0,0,-1,1};
+    bool valid(int i , int j , int m , int n){
+        if(i<0 || i>= m || j< 0 || j>= n) return false;
+
+        return true;
+    }
+    void dfs(vector<vector<char>>& a , int i , int j , int m , int n , vector<vector<bool>>& vis){
+        vis[i][j] = true;
+        for(int k = 0 ; k<4 ; k++){
+            int row = i + x[k];
+            int col = j + y[k];
+
+            if(valid(row,col,m,n) && vis[row][col] == false && a[row][col] == 'X'){
+                dfs(a,row,col,m,n,vis);
+            }
+        }
+    }
+    int countBattleships(vector<vector<char>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        vector<vector<bool>>vis(m,vector<bool>(n,false));
+        int ans = 0;
+        for(int i = 0 ; i< m ; i++ ){
+            for(int j = 0 ; j< n ; j++){
+                if(!vis[i][j] && board[i][j] == 'X'){
+                    dfs(board,i,j,m,n,vis);
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
