@@ -1,1 +1,35 @@
-
+Topological Sort
+class Solution {
+  public:
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
+        vector<vector<int>>adj(V);
+        vector<int>indeg(V,0);
+        vector<int>res;
+        for(int i = 0 ; i<edges.size(); i++){
+            vector<int>edge = edges[i];
+            int src = edge[0];
+            int dest = edge[1];
+            adj[src].push_back(dest);
+            indeg[dest]++;
+        }
+        queue<int>q;
+        for(int i = 0 ; i< V; i++){
+            if(!indeg[i]){
+                q.push(i);
+            }
+        }
+        
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            res.push_back(node);
+            for(int i = 0 ; i< adj[node].size();i++){
+                int neigh = adj[node][i];
+                indeg[neigh]--;
+                if(!indeg[neigh]) q.push(neigh);
+            }
+        }
+        
+        return res;
+    }
+};
