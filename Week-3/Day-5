@@ -33,3 +33,50 @@ class Solution {
         return res;
     }
 };
+
+
+
+207. Course Schedule
+class Solution {
+public:
+    bool cycle = false;
+    void dfs(vector<vector<int>>&a, int node , vector<bool>&path , vector<bool>&vis){
+        vis[node] = true;
+        path[node] = true;
+
+        for(int i =0 ; i<a[node].size();i++){
+            int neigh = a[node][i];
+            if(vis[neigh] == true && path[neigh] == true){
+                cycle = true;
+            }
+            if(!vis[neigh]){
+                dfs(a,neigh,path,vis);
+            }
+        }
+        path[node] = false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
+        for(int i = 0 ; i< prerequisites.size();i++){
+            vector<int>p = prerequisites[i];
+            int src = p[1];
+            int dest = p[0];
+            adj[src].push_back(dest);
+        }
+
+        vector<bool>vis(numCourses,false);
+        vector<bool>path(numCourses,false);
+
+        for(int i = 0 ; i< numCourses; i++){
+            if(!vis[i]){
+                dfs(adj,i,path,vis);
+            }
+        }
+
+        if(!cycle) return true;
+        return false;
+    }
+};
+
+
+
