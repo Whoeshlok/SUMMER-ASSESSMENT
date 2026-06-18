@@ -80,3 +80,38 @@ public:
 
 
 
+
+210. Course Schedule II
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
+        vector<int>indeg(numCourses,0);
+        for(int i = 0 ; i< prerequisites.size();i++){
+            vector<int>p = prerequisites[i];
+            int src = p[1];
+            int dest = p[0];
+            adj[src].push_back(dest);
+            indeg[dest]++;
+        }
+
+        queue<int>q;
+        for(int i = 0; i< numCourses ; i++){
+            if(!indeg[i]) q.push(i);
+        }
+        vector<int>res;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            res.push_back(node);
+
+            for(int i = 0 ; i< adj[node].size();i++){
+                int neigh = adj[node][i];
+                indeg[neigh]--;
+                if(!indeg[neigh]) q.push(neigh);
+            }
+        }
+        if(res.size() == numCourses) return res;
+        return {};
+    }
+};
