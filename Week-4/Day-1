@@ -42,3 +42,46 @@ public:
         return res;
     }
 };
+
+
+Shortest Path in Undirected Graph
+class Solution {
+  public:
+    vector<int> shortestPath(int V, vector<vector<int>> &edges, int src) {
+        vector<vector<int>>adj(V);
+        for(int i = 0 ; i< edges.size();i++){
+            vector<int>edge = edges[i];
+            int src1 = edge[0];
+            int dest = edge[1];
+            
+            adj[src1].push_back(dest);
+            adj[dest].push_back(src1);
+            
+            
+        }
+        
+        vector<bool>vis(V,false);
+        vector<int>res(V,-1);
+        queue<pair<int,int>>q;
+        vis[src] = true;
+        q.push({src,0});
+        
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            
+            int node = it.first;
+            int dist = it.second;
+            res[node] = dist;
+            for(int i = 0 ; i< adj[node].size();i++){
+                int neigh = adj[node][i];
+                if(!vis[neigh]){
+                vis[neigh] = true;
+                    q.push({neigh,dist+1});
+                }
+            }
+        }
+        
+        return res;
+    }
+};
