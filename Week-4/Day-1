@@ -17,3 +17,28 @@ public:
         return res;
     }
 };
+
+
+
+
+2287. Rearrange Characters to Make Target String
+class Solution {
+public:
+    int rearrangeCharacters(string s, string target) {
+        unordered_map<char,int>mp1;
+        unordered_map<char,int>mp2;
+        for(char ch : target){
+            mp1[ch]++;
+        }
+
+        for(char ch : s){
+            mp2[ch]++;
+        }
+
+        int res = INT_MAX;
+        for(auto it : mp1){
+            res = min(res,mp2[it.first]/it.second);
+        }
+        return res;
+    }
+};
