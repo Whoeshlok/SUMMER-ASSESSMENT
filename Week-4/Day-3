@@ -56,3 +56,55 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+1254. Number of Closed Islands
+class Solution {
+public:
+    vector<int> x = {-1,1,0,0};
+    vector<int> y = {0,0,-1,1};
+    bool valid(int i , int j , int m ,int n){
+        if(i<0 || i>= m || j<0 || j>=n) return false;
+        return true;
+    }
+    void dfs(vector<vector<int>>& a, int i , int j , int m , int n , vector<vector<bool>>& vis){
+        vis[i][j] = true;
+        for(int k = 0 ; k<4 ; k++){
+            int row = i + x[k];
+            int col = j + y[k];
+
+            if(valid(row,col,m,n) && !vis[row][col] && a[row][col] == 0){
+                dfs(a,row,col,m,n,vis);
+            }
+        }
+    }
+    int closedIsland(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int v = 0;
+        vector<vector<bool>>vis(m,vector<bool>(n,false));
+        for(int i = 0 ;i< m ; i++){
+            for(int j = 0 ; j< n ; j++){
+                if(!vis[i][j] && grid[i][j] == 0){
+                    dfs(grid,i,j,m,n,vis);
+                    v++;
+                }
+            }
+        }
+        vector<vector<bool>>vis1(m,vector<bool>(n,false));
+        int z = 0;
+        for(int i = 0; i< m ; i++){
+            for(int j = 0 ; j< n ; j++){
+                if(!vis1[i][j] && (i*j == 0 || i== m-1 || j == n-1) && grid[i][j] == 0){
+                    dfs(grid,i,j,m,n,vis1);
+                    z++;
+                }
+            }
+        }
+
+        return v-z;
+    }
+};
