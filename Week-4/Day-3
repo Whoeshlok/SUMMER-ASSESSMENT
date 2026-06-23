@@ -1,0 +1,30 @@
+1233. Remove Sub-Folders from the Filesystem
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        sort(folder.begin(),folder.end());
+        unordered_set<string>st;
+        st.insert(folder[0]);
+        vector<string>ans;
+        ans.push_back(folder[0]);
+        for(int i = 1 ; i< folder.size() ; i++){
+            string a = "";
+            bool ktg= true;
+            for(int j = 0 ; j<folder[i].size();j++){
+                a += folder[i][j];
+                if(folder[i][j] == '/' && j != 0) {
+                    string parent = a.substr(0, a.size() - 1);
+                    if(st.count(parent)) {
+                        ktg = false;
+                        break;
+                    }
+                }
+            }
+            if(ktg) {
+                ans.push_back(folder[i]);
+                st.insert(folder[i]);
+            }
+        }
+        return ans;
+    }
+};
