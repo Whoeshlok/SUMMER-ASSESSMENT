@@ -34,3 +34,44 @@ public:
 
     }
 };
+
+
+86. Partition List
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        if(!head || !head->next) return head;
+        vector<int>g;
+        vector<int>s;
+        ListNode* temp = head;
+        while(temp){
+            if(temp->val >= x) g.push_back(temp->val);
+            else s.push_back(temp->val);
+            temp = temp->next;
+        }
+        ListNode* dummy = new ListNode(-1);
+        ListNode* t = dummy;
+
+        for(int i = 0 ; i<s.size() ; i++){
+            ListNode* a = new ListNode(s[i]);
+            t->next = a;
+            t = a;
+        }
+        for(int i = 0 ; i<g.size() ; i++){
+            ListNode* a = new ListNode(g[i]);
+            t->next = a;
+            t = a;
+        }
+        return dummy->next;
+    }
+};
