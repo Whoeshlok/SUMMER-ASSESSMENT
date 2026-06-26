@@ -22,3 +22,31 @@ public:
 
     }
 };
+
+
+
+
+930. Binary Subarrays With Sum
+class Solution {
+public:
+    int atmost(vector<int>& nums,int x){
+        
+        if(x < 0) return 0;
+        int low = 0 , high = 0;
+        int n = nums.size() , sum = 0;
+        int ans = 0;
+        while(high<n){
+            sum += nums[high];
+            while(sum > x){
+                sum -= nums[low];   
+                low++;
+            }
+            ans += high-low+1;
+            high++;
+        }
+        return ans;
+    }
+    int numSubarraysWithSum(vector<int>& nums, int k) {
+        return atmost(nums,k) - atmost(nums,k-1);
+    }
+};
