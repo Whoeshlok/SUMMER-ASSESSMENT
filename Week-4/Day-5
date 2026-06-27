@@ -50,3 +50,37 @@ public:
         return atmost(nums,k) - atmost(nums,k-1);
     }
 };
+
+
+
+3020. Find the Maximum Number of Elements in Subset
+class Solution {
+public:
+    int maximumLength(vector<int>& nums) {
+        unordered_map<long long,int>mp;
+        for(int x : nums){
+            mp[x]++;
+        }
+        int ans = 1;
+
+        for(auto it : mp){
+            if(it.first == 1){
+                if(it.second%2) ans = max(ans,it.second);
+                else ans = max(ans,it.second-1);
+            }
+            else {
+                long long x = it.first;
+                int l = 0;
+                while(mp.count(x) && mp[x] >=2){
+                    l += 2;
+                    if(x>1e9) break;
+                    x = x*x;
+                }
+                if(mp.count(x)) l++;
+                else l--;
+                ans = max(ans,l);
+            }  
+        }
+        return ans;
+    }
+};
